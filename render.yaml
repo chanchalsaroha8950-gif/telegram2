@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: movieflix-progress
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -c "import os; from main import start_progress_server; start_progress_server('data/download.json', host='0.0.0.0', port=int(os.environ.get('PORT', '5000')))"
+    autoDeploy: true
+
+  - type: worker
+    name: movieflix-runner
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py --anime-mode
+    autoDeploy: true
+
+
